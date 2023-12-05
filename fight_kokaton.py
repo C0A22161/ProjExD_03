@@ -12,6 +12,9 @@ MAIN_DIR = os.path.split(os.path.abspath(__file__))[0]
 NUM_OF_BOMBS = 5  # 爆弾の数
 
 
+
+
+
 def check_bound(obj_rct: pg.Rect) -> tuple[bool, bool]:
     """
     オブジェクトが画面内or画面外を判定し，真理値タプルを返す関数
@@ -148,6 +151,7 @@ class Beam:
 
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
+    start_time = time.time()
     screen = pg.display.set_mode((WIDTH, HEIGHT))    
     bg_img = pg.image.load(f"{MAIN_DIR}/fig/pg_bg.jpg")
     bird = Bird(3, (900, 400))
@@ -158,13 +162,18 @@ def main():
     clock = pg.time.Clock()
     tmr = 0
     while True:
+        end_time = time.time()
+        a_time = end_time - start_time
+        # 時間を画面に表示
+        font = pg.font.Font(None, 60)#時間計測の文字の大きさ
+        time_text = font.render(f" {a_time:.4f} 時間", True, (255, 25, 200))
+        screen.blit(bg_img,(0, 0))
+        screen.blit(time_text,(50, 10))
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:  # スペースキーが押されたら
                 beam = Beam(bird)  # ビームインスタンスの生成
-        
-        screen.blit(bg_img, [0, 0])
         
         for bomb in bombs:
             if bird.rct.colliderect(bomb.rct):
