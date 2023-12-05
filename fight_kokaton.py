@@ -46,6 +46,7 @@ class Bird:
         引数1 num：こうかとん画像ファイル名の番号
         引数2 xy：こうかとん画像の位置座標タプル
         """
+
         img0 = pg.transform.rotozoom(pg.image.load(f"{MAIN_DIR}/fig/{num}.png"), 0, 2.0)
         img = pg.transform.flip(img0, True, False)  # デフォルトのこうかとん（右向き）
         self.imgs = {  # 0度から反時計回りに定義
@@ -101,7 +102,7 @@ class Bird:
 class Bomb:
     colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), 
               (255, 255, 0), (255, 0, 255), (0, 255, 255)]
-    # directions = [-5, +5]
+     #directions = [-5,+5]
     """
     爆弾に関するクラス
     """
@@ -111,6 +112,7 @@ class Bomb:
         """
         rad = random.randint(10, 100)
         self.img = pg.Surface((2*rad, 2*rad))
+        #self.imgs = 
         color = random.choice(__class__.colors)  # Bomb.colors
         pg.draw.circle(self.img, color, (rad, rad), rad)
         self.img.set_colorkey((0, 0, 0))
@@ -174,8 +176,9 @@ def main():
                 return
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:  # スペースキーが押されたら
                 beam = Beam(bird)  # ビームインスタンスの生成
-        
-        for bomb in bombs:
+            if event.type == pg.KEYDOWN and event.key == pg.K_DOWN:  # ↓が押されたら
+                beam = Beam(bird)  # ビームインスタンスの生成
+        for bomb in bombs: 
             if bird.rct.colliderect(bomb.rct):
                 # ゲームオーバー時に，こうかとん画像を切り替え，1秒間表示させる
                 bird.change_img(8, screen)
@@ -187,7 +190,7 @@ def main():
             if beam is not None and beam.rct.colliderect(bomb.rct):
                 beam = None
                 bombs[i] = None
-                bird.change_img(6, screen)
+                bird.change_img(20, screen)
         # Noneでない爆弾だけのリストを作る
         bombs = [bomb for bomb in bombs if bomb is not None]
 
