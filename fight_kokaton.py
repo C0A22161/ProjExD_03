@@ -118,7 +118,7 @@ class Bomb:
         self.img.set_colorkey((0, 0, 0))
         self.rct = self.img.get_rect()
         self.rct.center = random.randint(0, WIDTH), random.randint(0, HEIGHT)
-        self.vx, self.vy = random.choice([-5, +5]), random.choice([-5, +5])
+        self.vx, self.vy = random.choice([-5,+5]), random.choice([-5,+5])
 
     def update(self, screen: pg.Surface):
         """
@@ -168,7 +168,7 @@ def main():
         a_time = end_time - start_time
         # 時間を画面に表示
         font = pg.font.Font(None, 60)#時間計測の文字の大きさ
-        time_text = font.render(f" {a_time:.4f} 時間", True, (255, 25, 200))
+        time_text = font.render(f" {a_time:.4f} ", True, (255, 25, 200))
         screen.blit(bg_img,(0, 0))
         screen.blit(time_text,(50, 10))
         for event in pg.event.get():
